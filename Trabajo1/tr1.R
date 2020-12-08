@@ -60,13 +60,13 @@ w_df <- df4 %>% group_by(year) %>% summarise(n=sum(total_co2))%>% ungroup()
   
   n_df <- df4 %>% group_by(country) %>% summarise(total_co2=sum(total_co2))%>% ungroup() %>% slice_max(total_co2,n=20) %>% arrange(desc(total_co2))
   n_df2 <- df4 %>% filter(year > 2000) %>% group_by(country) %>% summarise(em_co2_pc=sum(em_co2_pc))%>% ungroup() %>% slice_max(em_co2_pc,n=15) %>% arrange(desc(em_co2_pc))
-  n_df2 %>% ggplot(aes(x = reorder(country, em_c02_pc),em_c02_pc,fill= country)) +
+  k <- n_df2 %>% ggplot(aes(x = reorder(country, em_co2_pc),em_co2_pc,fill= country)) +
     geom_bar(stat = "identity") +
     theme(legend.position = "none") +
    
     coord_polar(start=0)
     
-    
+ k   
     
    
   n_df3 <- df4 %>% group_by(country) %>% summarise(em_co2_pc=sum(em_co2_pc))%>% ungroup()  %>% arrange(desc(em_co2_pc))
