@@ -1,4 +1,5 @@
 library(tidyverse)
+library(gganimate)
 pct <- function(x) {((x/lag(x)
 )-1)*2}
 pct2 <- function(x) {((x/lag(x)
@@ -32,15 +33,16 @@ t_df4 <- t_df3  %>% mutate(temp = cumsum(tmean))
   
   
   geom_line(data =w_df3,aes(year,n),colour = "green") +
-  geom_smooth(data = w_df3,aes(year,n)) +
+  #geom_smooth(data = w_df3,aes(year,n)) +
  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-   geom_smooth(data = t_df3,aes(year,tmean),colour= "purple") +
+   #geom_smooth(data = t_df3,aes(year,tmean),colour= "purple") +
     geom_line(data = t_df3,aes(year,tmean,group=1),colour = "purple2") 
   
       
   
   
-j
+j + transition_reveal(year) +
+  labs(title = "year: {as.integer(frame_along)}")
 
 
 
@@ -48,15 +50,16 @@ y <-ggplot() +
   
   
   geom_line(data =w_df4,aes(year,tco2),colour = "green") +
-  geom_smooth(data = w_df4,aes(year,tco2)) +
- theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-   geom_smooth(data = t_df4,aes(year,temp),colour= "purple") +
+  #geom_smooth(data = w_df4,aes(year,tco2)) +
+ #theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+   #geom_smooth(data = t_df4,aes(year,temp),colour= "purple") +
     geom_line(data = t_df4,aes(year,temp,group=1),colour = "purple2") 
   
       
   
   
-y
+y+ transition_reveal(year) +
+  labs(title = "year: {as.integer(frame_along)}")
 
 l<- ggplot(wt_df,aes(n,tmean)) +
   geom_point() +

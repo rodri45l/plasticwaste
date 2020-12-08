@@ -2,6 +2,9 @@ library(tidyverse)
 library(rio)
 library(plotly)
 library(janitor)
+library(gganimate)
+
+library(transformr)
 #importamos los datos
 df1<- read_csv("./Datos/nation_1751_2017.csv")
 #Limpiamos el df y ponemos las variables como numericas
@@ -41,9 +44,12 @@ em_bf = X10 #`Emissions from bunker fuels`
     
     
   g<-  df5 %>% ggplot() +
-    geom_line(aes(year,total_co2 ,color = country)) +
+    geom_line(aes(year,total_co2 ,color = country,group=country) ) +
       theme(legend.position="none")
-   
+  
+  str(df5)
+  g +  transition_reveal(year) +
+    labs(title = "year: {as.integer(frame_along)}")
   
    ggplotly(g)
    
@@ -53,9 +59,10 @@ w_df <- df4 %>% group_by(year) %>% summarise(n=sum(total_co2))%>% ungroup()
 
   g<-  w_df %>% ggplot() +
     geom_point(aes(year,n)) +
-     geom_line(aes(year,n)) +
-     geom_smooth(aes(year,n,color= "red"))
-  g
+     geom_line(aes(year,n)) g
+  +geom_smooth(aes(year,n,color= "red"))
+  g +  transition_reveal(year) +
+    labs(title = "year: {as.integer(frame_along)}")
   #Grafico circular paises con mayor prod. co2 per capita
   
   n_df <- df4 %>% group_by(country) %>% summarise(total_co2=sum(total_co2))%>% ungroup() %>% slice_max(total_co2,n=20) %>% arrange(desc(total_co2))
@@ -82,5 +89,5 @@ w_df <- df4 %>% group_by(year) %>% summarise(n=sum(total_co2))%>% ungroup()
   p
   
   
-  
+  n_df6 <- df4 %>% group_by(country) %>% summarise(total_co2=sum(total_co2))%>% ungroup() %>% arrange(desc(total_co2))
     
