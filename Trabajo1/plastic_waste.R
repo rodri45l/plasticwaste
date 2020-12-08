@@ -19,9 +19,9 @@ waste_vs_gdp <- readr::read_csv("https://raw.githubusercontent.com/rfordatascien
           geom_point() +
           geom_smooth()
     j
- waste_vs_gdp2 <- waste_vs_gdp %>% select(`Per capita plastic waste (kilograms per person per day)`,`GDP per capita, PPP (constant 2011 international $) (constant 2011 international $)`)
+ waste_vs_gdp2 <- waste_vs_gdp %>% select(`Per capita plastic waste (kilograms per person per day)`,`GDP per capita, PPP (constant 2011 international $) (constant 2011 international $)`) %>% drop_na()
     cor(waste_vs_gdp2,method = "pearson")
-
+str(waste_vs_gdp2)
     mismanaged_vs_gdp2 <- mismanaged_vs_gdp %>% select(`Per capita mismanaged plastic waste (kilograms per person per day)`,`GDP per capita, PPP (constant 2011 international $) (Rate)`)
     cor(mismanaged_vs_gdp2, method = "pearson")
 
